@@ -1,7 +1,7 @@
 import asyncHandler from 'express-async-handler'
 import { prisma } from '../config/prismaConfig.js'
 export const createProperty = asyncHandler(async(req,res)=>{
-    const {title, description, price, address, country,city,facilities,image,userEmail}=req.body.data    
+    const {title, description, price, address,type, country,city,facilities,image,userEmail}=req.body.data    
     console.log(req.body.data)
     try{
 
@@ -11,6 +11,7 @@ export const createProperty = asyncHandler(async(req,res)=>{
                 price, 
                 address, 
                 country,
+                type,
                 city,
                 facilities,
                 image,
