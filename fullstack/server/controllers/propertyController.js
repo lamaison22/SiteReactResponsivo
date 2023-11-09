@@ -2,7 +2,7 @@ import asyncHandler from 'express-async-handler'
 import { prisma } from '../config/prismaConfig.js'
 export const createProperty = asyncHandler(async(req,res)=>{
     const {title, description, price, address,type, country,city,facilities,image,userEmail}=req.body.data    
-    console.log(req.body.data)
+    console.log("no createProperty: "+req.body.data)
     try{
         const property = await prisma.property.create({
             data:{title, 
@@ -27,28 +27,38 @@ export const createProperty = asyncHandler(async(req,res)=>{
     }
 })
 export const editProperty = asyncHandler(async(req,res)=>{
-      
-    const {id}=req.params
-    
-    try {
-        const property =getProperty(id)
-        const updatedResidency=await prisma.property.update({where:{id} ,data:{
-            title, 
-                description, 
-                price, 
-                address, 
-                country,
-                type,
-                city,
-                facilities,
-                image,
-         }})
+    const {id,title, description, price, address,type, country,city,facilities,image,userEmail}=req.body.data    
 
-        res.send(property)
+    try {
+        const updatedResidency=await prisma.property.update({where:{id:id} ,data:{
+            title:title, //e passar todos com as novas infos a principio
+                description:description, 
+                price:price, 
+                address:address, 
+                country:country,
+                type:type,
+                city:city,
+                facilities:facilities,
+                image:image,
+         }})
+        res.send(updatedResidency)
         }catch (error) {
         throw new Error (error.message)
     }
 })
+export const deleteProperty = asyncHandler(async(req,res)=>{
+    const {id}=req.body.data    
+
+    try {
+        console.log("esse é o id q ta chegando sem chave" +id)
+
+        await prisma.property.delete({where:{id:id}})
+       
+        }catch (error) {
+        throw new Error (error.message)
+    }
+})
+   
    
 
 //pegar todas as propriedades
