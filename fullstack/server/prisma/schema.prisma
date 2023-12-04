@@ -25,6 +25,7 @@ model Property {
     city String
     country String
     type String?
+    faixa String?
     image String
     facilities Json
     userEmail String

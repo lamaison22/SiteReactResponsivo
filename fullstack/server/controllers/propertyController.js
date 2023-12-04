@@ -1,7 +1,7 @@
 import asyncHandler from 'express-async-handler'
 import { prisma } from '../config/prismaConfig.js'
 export const createProperty = asyncHandler(async(req,res)=>{
-    const {title, description, price, address,type, country,city,facilities,image,userEmail}=req.body.data    
+    const {title, description, price, address,type, faixa, country,city,facilities,image,userEmail}=req.body.data    
     console.log("no createProperty: "+req.body.data)
     try{
         const property = await prisma.property.create({
@@ -11,6 +11,7 @@ export const createProperty = asyncHandler(async(req,res)=>{
                 address, 
                 country,
                 type,
+                faixa,
                 city,
                 facilities,
                 image,
@@ -27,7 +28,8 @@ export const createProperty = asyncHandler(async(req,res)=>{
     }
 })
 export const editProperty = asyncHandler(async(req,res)=>{
-    const {id,title, description, price, address,type, country,city,facilities,image,userEmail}=req.body.data    
+    const {id,title, description, price, address,type, faixa, country,city,facilities,image,userEmail}=req.body.data    
+    
 
     try {
         const updatedResidency=await prisma.property.update({where:{id:id} ,data:{
@@ -50,8 +52,6 @@ export const deleteProperty = asyncHandler(async(req,res)=>{
     const {id}=req.body.data    
 
     try {
-        console.log("esse é o id q ta chegando sem chave" +id)
-
         await prisma.property.delete({where:{id:id}})
        
         }catch (error) {
